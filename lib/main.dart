@@ -12,9 +12,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     print('【MyApp】build()が呼ばれました');
     return MaterialApp(
-      title: 'Multi Page App',
+      title: 'Hello Flutter App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFFD946EF), // Fuchsia (ピンク紫)
+          brightness: Brightness.light,
+        ),
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent, // グラデーション用に透明
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
       ),
       // ルート設定方式1: routesを使う方法
       initialRoute: '/', // 最初に表示するルート
@@ -35,14 +44,25 @@ class HomePage extends StatelessWidget {
     print('【HomePage】build()が呼ばれました');
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('ホーム画面'),
+        title: const Text('Home'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xFFEC4899), // 強めのピンク
+                Color(0xFFA855F7), // 紫
+              ],
+            ),
+          ),
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('これは最初のページです', style: TextStyle(fontSize: 24)),
+            const Text('Home', style: TextStyle(fontSize: 24)),
             const SizedBox(height: 20),
             // ナビゲーション方法1: Named Route
             ElevatedButton(
@@ -80,8 +100,19 @@ class SecondPage extends StatelessWidget {
     print('【SecondPage】build()が呼ばれました');
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('セカンド画面'),
+        title: const Text('Second'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xFFEC4899), // 強めのピンク
+                Color(0xFFA855F7), // 紫
+              ],
+            ),
+          ),
+        ),
         // 戻るボタンは自動で追加される
       ),
       body: Center(

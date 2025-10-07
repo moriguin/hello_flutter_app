@@ -1,14 +1,5 @@
 # hello_flutter_app
 
-2 画面の Flutter サンプルアプリです。
-
-## アプリの内容
-
-- **ホーム画面**: 2 つのボタンで 2 ページ目へ遷移（Named Route と Direct Push の 2 つの方法を実装）
-- **セカンド画面**: ホームに戻るボタンがある
-
-**Web で例えると**: React Router や Next.js のページ遷移に似ています。`Navigator.pushNamed` は `<Link>` や `router.push()`、`Navigator.pop` は `router.back()` に相当します。
-
 ## 実機デバッグの方法
 
 ### Android の場合
