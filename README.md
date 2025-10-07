@@ -1,3 +1,53 @@
+# hello_flutter_app
+
+2 画面の Flutter サンプルアプリです。
+
+## アプリの内容
+
+- **ホーム画面**: 2 つのボタンで 2 ページ目へ遷移（Named Route と Direct Push の 2 つの方法を実装）
+- **セカンド画面**: ホームに戻るボタンがある
+
+**Web で例えると**: React Router や Next.js のページ遷移に似ています。`Navigator.pushNamed` は `<Link>` や `router.push()`、`Navigator.pop` は `router.back()` に相当します。
+
+## 実機デバッグの方法
+
+### Android の場合
+
+1. **USB デバッグを有効化** (スマホ側)
+
+   - 設定 → 開発者向けオプション → USB デバッグを ON
+   - (開発者向けオプションが見えない場合: 設定 → デバイス情報 → ビルド番号を 7 回タップ)
+
+2. **スマホを PC に接続**
+
+   ```cmd
+   adb devices
+   ```
+
+   - 初回接続時、スマホに許可ダイアログが出るので「許可」をタップ
+
+3. **アプリを実行**
+   ```cmd
+   flutter run
+   ```
+   - 複数デバイスがある場合は選択画面が出ます
+   - または `flutter run -d <device-id>` で指定
+
+### iOS の場合
+
+1. **Mac が必要** (Windows では iOS 実機デバッグは不可)
+2. **Apple Developer アカウント** (無料でも可)
+3. **Lightning ケーブルで接続**
+   ```bash
+   flutter run
+   ```
+
+### 実行中のホットリロード
+
+- **r** キーを押す: ホットリロード（画面を即座に更新）
+- **R** キーを押す: ホットリスタート（アプリを再起動）
+- **q** キーを押す: デバッグ終了
+
 # Windows 環境での Android SDK 完全セットアップガイド
 
 このガイドでは、Android Studio なしで Android SDK のみを Windows 環境にインストールする方法を詳しく説明します。
