@@ -62,8 +62,6 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Home', style: TextStyle(fontSize: 24)),
-            const SizedBox(height: 20),
             // ナビゲーション方法1: Named Route
             ElevatedButton(
               onPressed: () {
@@ -84,6 +82,7 @@ class HomePage extends StatelessWidget {
               },
               child: const Text('2ページ目へ（Direct Push）'),
             ),
+            const SizedBox(height: 100),
           ],
         ),
       ),
