@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "WebSearch",
+      "Bash(.gradlew.bat :app:dependencies --configuration debugCompileClasspath)"
     ],
     "deny": [],
     "ask": []

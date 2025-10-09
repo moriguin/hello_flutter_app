@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'second_page.dart';
+import 'heart_rate_page.dart';
 import '../widgets/gradient_app_bar.dart';
 
 // ページ1: ホーム画面
@@ -34,6 +35,22 @@ class HomePage extends StatelessWidget {
                 );
               },
               child: const Text('2ページ目へ（Direct Push）'),
+            ),
+            const SizedBox(height: 20),
+            // 脈拍測定ページへ
+            ElevatedButton(
+              onPressed: () {
+                print('【HomePage】脈拍測定ボタンがタップされました');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HeartRatePage()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('脈拍測定'),
             ),
             const SizedBox(height: 100),
           ],
