@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
-import 'screens/second_page.dart';
 
 void main() {
   print('【アプリ起動】main()が実行されました');
@@ -27,12 +26,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      // ルート設定方式1: routesを使う方法
-      initialRoute: '/', // 最初に表示するルート
-      routes: {
-        '/': (context) => const HomePage(),
-        '/second': (context) => const SecondPage(),
-      },
+      home: const HomePage(),
     );
   }
 }
