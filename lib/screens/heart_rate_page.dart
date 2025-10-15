@@ -12,7 +12,6 @@ class HeartRatePage extends StatefulWidget {
 
 class _HeartRatePageState extends State<HeartRatePage> {
   CameraController? _cameraController;
-  bool _isInitialized = false;
   bool _isFlashOn = false;
   String _statusMessage = 'カメラを初期化中...';
 
@@ -108,7 +107,6 @@ class _HeartRatePageState extends State<HeartRatePage> {
       await _cameraController!.initialize();
 
       setState(() {
-        _isInitialized = true;
         _statusMessage = 'フラッシュをONにして測定を開始してください';
       });
     } catch (e) {
@@ -127,7 +125,7 @@ class _HeartRatePageState extends State<HeartRatePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // カメラプレビュー
-            if (_isInitialized && _cameraController != null)
+            if (_cameraController?.value.isInitialized == true)
               SizedBox(
                 width: 300,
                 height: 300,
@@ -159,7 +157,7 @@ class _HeartRatePageState extends State<HeartRatePage> {
               ),
             const SizedBox(height: 20),
             // フラッシュON/OFFボタン（測定中は非表示）
-            if (_isInitialized && !_isMeasuring)
+            if (_cameraController?.value.isInitialized == true && !_isMeasuring)
               ElevatedButton(
                 onPressed: () => _toggleFlash(!_isFlashOn),
                 style: ElevatedButton.styleFrom(
@@ -170,7 +168,7 @@ class _HeartRatePageState extends State<HeartRatePage> {
               ),
             const SizedBox(height: 10),
             // 測定開始/停止ボタン
-            if (_isInitialized)
+            if (_cameraController?.value.isInitialized == true)
               ElevatedButton(
                 onPressed: _isMeasuring ? _stopMeasurement : _startMeasurement,
                 style: ElevatedButton.styleFrom(

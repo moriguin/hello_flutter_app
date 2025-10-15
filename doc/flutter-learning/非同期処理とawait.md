@@ -12,18 +12,17 @@
 ## Dart の例
 
 ```dart
-// 非同期関数（Future を返す）
 Future<void> greetAsync(String name) async {
   await Future.delayed(Duration(seconds: 1));
   print(name);
 }
 
-// await なし = 待たない
-greetAsync("hoge"); // すぐ次へ
+// await なし
+greetAsync("hoge");
 print("B");
 // 実行順序: B → hoge (1秒後)
 
-// await あり = 待つ
+// await あり
 await greetAsync("hoge"); // 完了まで待つ
 print("B");
 // 実行順序: hoge (1秒後) → B
@@ -31,7 +30,7 @@ print("B");
 
 ---
 
-## JavaScript の例
+## JavaScript と一緒
 
 ```javascript
 // 非同期関数
@@ -40,12 +39,12 @@ async function greetAsync(name) {
   console.log(name);
 }
 
-// await なし = 待たない
+// await なし
 greetAsync("hoge");
 console.log("B");
 // → B, hoge (1秒後)
 
-// await あり = 待つ
+// await あり
 await greetAsync("hoge");
 console.log("B");
 // → hoge (1秒後), B
@@ -53,12 +52,33 @@ console.log("B");
 
 ---
 
-## 見分け方
+## async と Future の関係
 
-| Dart | JavaScript |
-|------|-----------|
-| `Future<void> method() async` | `async function method()` |
-| `Future<int> calculate() async` | `async function calculate()` |
+- **`async` をつけると自動的に `Future` を返さないといけない**
+- await を使いたい → async が必須
+- async と Future はセット
+
+```dart
+// ✅ OK: async があれば await が使える
+Future<void> method() async {
+  await something();
+}
+
+// ✅ OK:async なし（手動で Future を返す）
+Future<void> method() {
+  return something();
+}
+
+// ❌ NG例1: async なしで await を使う
+void method() {
+  await something(); // エラー！async がないと await は使えない
+}
+
+// ❌ NG例2: async なしで await を使う（Future 付き）
+Future<void> method() {
+  await something(); // エラー！async がないと await は使えない
+}
+```
 
 ---
 
