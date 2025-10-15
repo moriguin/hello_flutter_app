@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import '../widgets/gradient_app_bar.dart';
@@ -75,8 +76,10 @@ class _HeartRatePageState extends State<HeartRatePage> {
 
     // 画像ストリームの取得開始
     _cameraController!.startImageStream((CameraImage image) {
-      print('【フレーム取得】${image.width}x${image.height}');
-      // TODO: 次のステップで赤色成分を抽出
+      // 赤色成分の抽出
+      double redValue = _extractRedAverage(image);
+      print('【赤色平均】$redValue');
+      // TODO: 次のステップでデータを蓄積
     });
   }
 
@@ -91,6 +94,21 @@ class _HeartRatePageState extends State<HeartRatePage> {
     });
 
     print('【測定停止】');
+  }
+
+  /// 画像から赤色の平均値を抽出
+  double _extractRedAverage(CameraImage image) {
+    // YUVフォーマットのY平面（明度）を使用
+    final Uint8List yPlane = image.planes[0].bytes;
+    final int totalPixels = image.width * image.height;
+
+    int sum = 0;
+    for (int i = 0; i < yPlane.length; i++) {
+      sum += yPlane[i];
+    }
+
+    // 平均値を返す（0〜255）
+    return sum / totalPixels;
   }
 
   /// カメラの初期化
