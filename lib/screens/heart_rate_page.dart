@@ -16,6 +16,10 @@ class _HeartRatePageState extends State<HeartRatePage> {
   bool _isFlashOn = false;
   String _statusMessage = 'カメラを初期化中...';
 
+  // 測定関連の状態
+  bool _isMeasuring = false; // 測定中かどうか
+  int _heartRate = 0; // 測定結果（BPM）
+
   @override
   void initState() {
     super.initState();
@@ -24,7 +28,8 @@ class _HeartRatePageState extends State<HeartRatePage> {
 
   @override
   void dispose() {
-    _toggleFlash(false); // フラッシュをOFFにする
+    // setState() を呼ばずに直接フラッシュをOFFにする
+    // _cameraController?.setFlashMode(FlashMode.off);
     _cameraController?.dispose();
     super.dispose();
   }
@@ -50,6 +55,36 @@ class _HeartRatePageState extends State<HeartRatePage> {
         _statusMessage = 'フラッシュの切り替えに失敗しました: $e';
       });
     }
+  }
+
+  /// 測定開始
+  void _startMeasurement() {
+    if (!_isFlashOn) {
+      setState(() {
+        _statusMessage = '先にフラッシュをONにしてください';
+      });
+      return;
+    }
+
+    setState(() {
+      _isMeasuring = true;
+      _heartRate = 0;
+      _statusMessage = '測定中... 指をカメラとフラッシュに当ててください';
+    });
+
+    print('【測定開始】');
+    // TODO: 次のステップで画像ストリーム取得を実装
+  }
+
+  /// 測定停止
+  void _stopMeasurement() {
+    setState(() {
+      _isMeasuring = false;
+      _statusMessage = '測定を停止しました';
+    });
+
+    print('【測定停止】');
+    // TODO: 次のステップで画像ストリーム停止を実装
   }
 
   /// カメラの初期化
@@ -112,8 +147,19 @@ class _HeartRatePageState extends State<HeartRatePage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            // フラッシュON/OFFボタン
-            if (_isInitialized)
+            // 心拍数表示
+            if (_heartRate > 0)
+              Text(
+                '$_heartRate BPM',
+                style: const TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+              ),
+            const SizedBox(height: 20),
+            // フラッシュON/OFFボタン（測定中は非表示）
+            if (_isInitialized && !_isMeasuring)
               ElevatedButton(
                 onPressed: () => _toggleFlash(!_isFlashOn),
                 style: ElevatedButton.styleFrom(
@@ -121,6 +167,24 @@ class _HeartRatePageState extends State<HeartRatePage> {
                   foregroundColor: Colors.white,
                 ),
                 child: Text(_isFlashOn ? 'フラッシュOFF' : 'フラッシュON'),
+              ),
+            const SizedBox(height: 10),
+            // 測定開始/停止ボタン
+            if (_isInitialized)
+              ElevatedButton(
+                onPressed: _isMeasuring ? _stopMeasurement : _startMeasurement,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _isMeasuring ? Colors.red : Colors.green,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ),
+                ),
+                child: Text(
+                  _isMeasuring ? '測定停止' : '測定開始',
+                  style: const TextStyle(fontSize: 18),
+                ),
               ),
             const SizedBox(height: 10),
             // 戻るボタン
