@@ -72,18 +72,25 @@ class _HeartRatePageState extends State<HeartRatePage> {
     });
 
     print('【測定開始】');
-    // TODO: 次のステップで画像ストリーム取得を実装
+
+    // 画像ストリームの取得開始
+    _cameraController!.startImageStream((CameraImage image) {
+      print('【フレーム取得】${image.width}x${image.height}');
+      // TODO: 次のステップで赤色成分を抽出
+    });
   }
 
   /// 測定停止
   void _stopMeasurement() {
+    // 画像ストリームの停止
+    _cameraController!.stopImageStream();
+
     setState(() {
       _isMeasuring = false;
       _statusMessage = '測定を停止しました';
     });
 
     print('【測定停止】');
-    // TODO: 次のステップで画像ストリーム停止を実装
   }
 
   /// カメラの初期化
